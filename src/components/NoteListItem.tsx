@@ -1,15 +1,22 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { BookMarkIcon } from '../assets';
 
-interface NoteItemListProps {
+export interface NoteItemListProps {
   title: string;
+  text: string;
+  index: number;
 }
 
 const NoteItemList = (props: NoteItemListProps) => {
-  const { title } = props;
+  const navigate = useNavigate();
+  const { title, text, index } = props;
+  const handleClick = () => {
+    navigate(`/${index}`);
+  };
   return (
-    <NoteItemWrapper>
+    <NoteItemWrapper onClick={handleClick}>
       <InfoSection>
         <NoteItemTitle>{title}</NoteItemTitle>
         <NoteItemDescription>18시간 전 수정했어요</NoteItemDescription>

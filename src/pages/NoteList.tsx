@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Button from '../components/Button';
-import NoteItemList from '../components/NoteListItem';
+import NoteItemList, { NoteItemListProps } from '../components/NoteListItem';
 
 const NoteList = () => {
   const navigate = useNavigate();
@@ -11,7 +11,11 @@ const NoteList = () => {
   };
 
   const dataList = JSON.parse(window.localStorage.getItem('dataList'));
-  const noteList = dataList ? dataList.map((data) => <NoteItemList title={data.title} />) : null;
+  const noteList = dataList
+    ? dataList.map((data: NoteItemListProps, index: number) => (
+        <NoteItemList key={index} index={index} title={data.title} text={data.text} />
+      ))
+    : null;
 
   return (
     <>
