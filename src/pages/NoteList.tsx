@@ -1,17 +1,28 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Button from '../components/Button';
 import NoteItemList from '../components/NoteListItem';
 
 const NoteList = () => {
+  const navigate = useNavigate();
+  const clickHandler = (link: string) => {
+    navigate(`/${link}`);
+  };
+
+  const dataList = JSON.parse(window.localStorage.getItem('dataList'));
+  const noteList = dataList ? dataList.map((data) => <NoteItemList title={data.title} />) : null;
+
   return (
     <>
       <FilterSection>
         <InputBar placeholder="검색"></InputBar>
         <FilterDropDown>최근 생성순</FilterDropDown>
       </FilterSection>
-      <NoteItemList />
-      <NewNoteBtn color="blue">새 노트</NewNoteBtn>
+      {noteList}
+      <NewNoteBtn color="blue" onClick={() => clickHandler('NewNote')}>
+        새 노트
+      </NewNoteBtn>
     </>
   );
 };

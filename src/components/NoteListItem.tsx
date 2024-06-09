@@ -2,11 +2,16 @@ import styled from 'styled-components';
 
 import { BookMarkIcon } from '../assets';
 
-const NoteItemList = () => {
+interface NoteItemListProps {
+  title: string;
+}
+
+const NoteItemList = (props: NoteItemListProps) => {
+  const { title } = props;
   return (
     <NoteItemWrapper>
       <InfoSection>
-        <NoteItemTitle>리액트 토이 프로젝트</NoteItemTitle>
+        <NoteItemTitle>{title}</NoteItemTitle>
         <NoteItemDescription>18시간 전 수정했어요</NoteItemDescription>
       </InfoSection>
       <BookMark>
