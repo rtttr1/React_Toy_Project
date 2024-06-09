@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Button from '../components/Button';
+import DropDown from '../components/DropDown';
 import NoteItemList, { NoteItemListProps } from '../components/NoteListItem';
-
 const NoteList = () => {
   const navigate = useNavigate();
   const clickHandler = (link: string) => {
@@ -21,7 +21,7 @@ const NoteList = () => {
     <>
       <FilterSection>
         <InputBar placeholder="검색"></InputBar>
-        <FilterDropDown>최근 생성순</FilterDropDown>
+        <DropDown>최근 생성순</DropDown>
       </FilterSection>
       {noteList}
       <NewNoteBtn color="blue" onClick={() => clickHandler('NewNote')}>
@@ -39,7 +39,7 @@ const FilterSection = styled.div`
 `;
 
 const InputBar = styled.input`
-  width: 25rem;
+  width: 27rem;
   padding: 1rem;
 
   border: none;
