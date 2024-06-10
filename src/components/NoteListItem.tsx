@@ -36,7 +36,9 @@ const NoteItemWrapper = styled.section`
   width: 100%;
   padding: 1.7rem;
 
-  background-color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.text_color};
+
+  background-color: ${({ theme }) => theme.content_color};
   border-radius: 10px;
 `;
 

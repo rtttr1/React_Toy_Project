@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -5,6 +6,11 @@ import Button from '../components/Button';
 
 const CreateNotePage = () => {
   const navigate = useNavigate();
+  const [data, setData] = useState({ title: '', text: '' });
+  const handleInputValue = (value, identifier) => {
+    setData((prevState) => ({ ...prevState, [identifier]: value }));
+  };
+
   const clickHandler = () => {
     navigate(`/`);
   };
@@ -12,19 +18,16 @@ const CreateNotePage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const fd = new FormData(e.target);
-    const data = Object.fromEntries(fd.entries());
-
-    if (window.localStorage.length) {
-      let dataList = JSON.parse(window.localStorage.getItem('dataList'));
+    if (localStorage.length) {
+      let dataList = JSON.parse(localStorage.getItem('dataList'));
       dataList = JSON.stringify([...dataList, data]);
-      window.localStorage.setItem('dataList', dataList);
+      localStorage.setItem('dataList', dataList);
     } else {
       const dataList = JSON.stringify([data]);
-      window.localStorage.setItem('dataList', dataList);
+      localStorage.setItem('dataList', dataList);
     }
 
-    console.log(JSON.parse(window.localStorage.getItem('dataList')));
+    console.log(JSON.parse(localStorage.getItem('dataList')));
     alert('메모 생성 성공');
     navigate('/');
   };
@@ -35,8 +38,12 @@ const CreateNotePage = () => {
         뒤로가기
       </BackBtn>
       <NoteForm onSubmit={handleSubmit}>
-        <TitleInput name="title" />
-        <TextInput name="text" />
+        <TitleInput
+          name="title"
+          value={data.title}
+          onChange={(event) => handleInputValue(event.target.value, 'title')}
+        />
+        <TextInput name="text" value={data.text} onChange={(event) => handleInputValue(event.target.value, 'text')} />
         <CheckBtn color="blue">확인</CheckBtn>
       </NoteForm>
     </>
@@ -55,6 +62,9 @@ const TitleInput = styled.input`
   width: 100%;
   height: 5rem;
 
+  color: ${({ theme }) => theme.text_color};
+
+  background-color: ${({ theme }) => theme.content_color};
   border: none;
   border-radius: 10px;
 `;
@@ -64,6 +74,9 @@ const TextInput = styled.input`
   height: 25rem;
   margin-top: 0.7rem;
 
+  color: ${({ theme }) => theme.text_color};
+
+  background-color: ${({ theme }) => theme.content_color};
   border: none;
   border-radius: 10px;
 `;

@@ -29,7 +29,9 @@ const DropDownBtn = styled(Dropdown)`
   width: 12rem;
   padding: 1.77rem;
 
-  background-color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.text_color};
+
+  background-color: ${({ theme }) => theme.content_color};
   box-shadow: none;
   border: none;
   border-radius: 10px;

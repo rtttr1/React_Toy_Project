@@ -73,6 +73,9 @@ const TitleInput = styled.input`
   width: 100%;
   height: 5rem;
 
+  color: ${({ theme }) => theme.text_color};
+
+  background-color: ${({ theme }) => theme.content_color};
   border: none;
   border-radius: 10px;
 `;
@@ -82,6 +85,9 @@ const TextInput = styled.input`
   height: 25rem;
   margin-top: 0.7rem;
 
+  color: ${({ theme }) => theme.text_color};
+
+  background-color: ${({ theme }) => theme.content_color};
   border: none;
   border-radius: 10px;
 `;

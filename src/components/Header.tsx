@@ -1,8 +1,16 @@
+import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import { BtnColor } from '../constants';
+import { currentModeState } from '../recoil/modeAtom';
 
 const Header = () => {
+  const setCurrentMode = useSetRecoilState(currentModeState);
+
+  const handleThemeChange = () => {
+    setCurrentMode((prevState) => (prevState === 'LIGHT' ? 'DARK' : 'LIGHT'));
+  };
+
   return (
     <HeaderWrapper>
       <HeaderButtonWrapper>
@@ -11,7 +19,9 @@ const Header = () => {
             return <ColorBtn key={index} color={color}></ColorBtn>;
           })}
         </ColorBtnList>
-        <ThemeBtn type="button">모드</ThemeBtn>
+        <ThemeBtn type="button" onClick={handleThemeChange}>
+          모드
+        </ThemeBtn>
       </HeaderButtonWrapper>
       <HeaderTitle>홍 노트</HeaderTitle>
       <HeaderDescription>리액트 스터디 모각공 언제 열어주세요?</HeaderDescription>

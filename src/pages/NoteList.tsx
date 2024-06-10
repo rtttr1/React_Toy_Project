@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Button from '../components/Button';
 import DropDown from '../components/DropDown';
 import NoteItemList, { NoteItemListProps } from '../components/NoteListItem';
+
 const NoteList = () => {
   const navigate = useNavigate();
   const clickHandler = (link: string) => {
@@ -42,15 +43,8 @@ const InputBar = styled.input`
   width: 27rem;
   padding: 1rem;
 
+  background-color: ${({ theme }) => theme.content_color};
   border: none;
-  border-radius: 20px;
-`;
-
-const FilterDropDown = styled.button`
-  width: 13.5rem;
-  padding: 1.1rem;
-
-  background-color: ${({ theme }) => theme.colors.white};
   border-radius: 20px;
 `;
 

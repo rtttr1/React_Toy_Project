@@ -1,13 +1,12 @@
-import { DefaultTheme } from 'styled-components';
-
 const colors = {
   white: '#FFFFFF',
   black: '#222222',
-  red: '#d90429',
-  yellow: '#ffc300',
+  red: '#e63946',
+  yellow: '#f9c74f',
   green: '#38b000',
   gray: '#e9ecef',
   lightgray: '#adb5bd',
+  blue: '#023e8a',
 };
 
 export type ColorsTypes = typeof colors;
@@ -182,7 +181,18 @@ const fonts = {
 
 export type FontsTypes = typeof fonts;
 
-export const theme: DefaultTheme = {
+export const darkTheme = {
+  background_color: '#212529',
+  content_color: '#495057',
+  text_color: '#ffffff',
+  colors,
+  fonts,
+};
+
+export const lightTheme = {
+  background_color: '#f8f7ff',
+  content_color: '#ffffff',
+  text_color: '#000000',
   colors,
   fonts,
 };
