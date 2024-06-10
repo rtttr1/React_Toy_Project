@@ -6,7 +6,7 @@ import Button from '../components/Button';
 
 const CreateNotePage = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState({ title: '', text: '' });
+  const [data, setData] = useState({ title: '', text: '', bookMark: false });
   const handleInputValue = (value, identifier) => {
     setData((prevState) => ({ ...prevState, [identifier]: value }));
   };

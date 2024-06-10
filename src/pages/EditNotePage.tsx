@@ -18,12 +18,10 @@ const EditNotePage = () => {
   };
 
   const handleDeleteNote = () => {
-    console.log(id);
     dataList.splice(id, 1);
 
-    window.localStorage.setItem('dataList', JSON.stringify(dataList));
+    localStorage.setItem('dataList', JSON.stringify(dataList));
 
-    console.log(JSON.parse(window.localStorage.getItem('dataList')));
     alert('메모 삭제 성공');
     navigate('/');
   };

@@ -1,28 +1,31 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { BookMarkIcon } from '../assets';
+import { BookMarkBlankIcon, BookMarkFillIcon } from '../assets';
 
 export interface NoteItemListProps {
   title: string;
   text: string;
   index: number;
+  bookMark: boolean;
+  handleBookMark: any;
 }
 
 const NoteItemList = (props: NoteItemListProps) => {
   const navigate = useNavigate();
-  const { title, text, index } = props;
+  const { title, text, index, bookMark, handleBookMark } = props;
   const handleClick = () => {
     navigate(`/${index}`);
   };
+
   return (
     <NoteItemWrapper onClick={handleClick}>
       <InfoSection>
         <NoteItemTitle>{title}</NoteItemTitle>
         <NoteItemDescription>18시간 전 수정했어요</NoteItemDescription>
       </InfoSection>
-      <BookMark>
-        <BookMarkIcon />
+      <BookMark onClick={() => handleBookMark(index)}>
+        {bookMark ? <BookMarkFillIcon /> : <BookMarkBlankIcon />}
       </BookMark>
     </NoteItemWrapper>
   );
