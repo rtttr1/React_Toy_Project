@@ -1,15 +1,18 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Button from '../components/Button';
+import { memoDataType } from '../types';
 
 const EditNotePage = () => {
   const { id } = useParams();
 
-  let dataList = JSON.parse(window.localStorage.getItem('dataList'));
-  const [data, setData] = useState(dataList[id]);
-  const handleInputValue = (value, identifier) => {
+  let dataList = JSON.parse(localStorage.getItem('dataList')!);
+
+  const [data, setData] = useState<memoDataType>(dataList[id!]);
+
+  const handleInputValue = (value: string, identifier: string) => {
     setData((prevState) => ({ ...prevState, [identifier]: value }));
   };
   const navigate = useNavigate();
@@ -26,12 +29,8 @@ const EditNotePage = () => {
     navigate('/');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const fd = new FormData(e.target);
-    const data = Object.fromEntries(fd.entries());
-
     if (!(dataList.title === data.title && dataList.text === data.text)) {
       dataList = JSON.stringify(dataList.with(id, data));
       window.localStorage.setItem('dataList', dataList);
@@ -45,7 +44,7 @@ const EditNotePage = () => {
       <BackBtn color={'yellow'} onClick={clickHandler}>
         뒤로가기
       </BackBtn>
-      <NoteForm onSubmit={handleSubmit}>
+      <NoteForm onSubmit={(event) => handleSubmit(event)}>
         <TitleInput
           name="title"
           value={data.title}
@@ -65,7 +64,10 @@ const BackBtn = styled(Button)`
   margin: 1.5rem 0 3rem 0;
 `;
 
-const NoteForm = styled.form``;
+const NoteForm = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
 
 const TitleInput = styled.input`
   width: 100%;

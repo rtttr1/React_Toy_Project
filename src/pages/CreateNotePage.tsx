@@ -7,7 +7,7 @@ import Button from '../components/Button';
 const CreateNotePage = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({ title: '', text: '', bookMark: false });
-  const handleInputValue = (value, identifier) => {
+  const handleInputValue = (value: string, identifier: string) => {
     setData((prevState) => ({ ...prevState, [identifier]: value }));
   };
 
@@ -15,19 +15,17 @@ const CreateNotePage = () => {
     navigate(`/`);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    if (localStorage.length) {
-      let dataList = JSON.parse(localStorage.getItem('dataList'));
-      dataList = JSON.stringify([...dataList, data]);
+    if (localStorage.getItem('dataList')) {
+      const dataList = JSON.stringify([...JSON.parse(localStorage.getItem('dataList')!), data]);
+
       localStorage.setItem('dataList', dataList);
     } else {
       const dataList = JSON.stringify([data]);
       localStorage.setItem('dataList', dataList);
     }
-
-    console.log(JSON.parse(localStorage.getItem('dataList')));
     alert('메모 생성 성공');
     navigate('/');
   };
@@ -56,7 +54,10 @@ const BackBtn = styled(Button)`
   margin: 1.5rem 0 3rem 0;
 `;
 
-const NoteForm = styled.form``;
+const NoteForm = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
 
 const TitleInput = styled.input`
   width: 100%;

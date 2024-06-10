@@ -5,7 +5,6 @@ import { BookMarkBlankIcon, BookMarkFillIcon } from '../assets';
 
 export interface NoteItemListProps {
   title: string;
-  text: string;
   index: number;
   bookMark: boolean;
   handleBookMark: any;
@@ -13,7 +12,8 @@ export interface NoteItemListProps {
 
 const NoteItemList = (props: NoteItemListProps) => {
   const navigate = useNavigate();
-  const { title, text, index, bookMark, handleBookMark } = props;
+  const { title, index, bookMark, handleBookMark } = props;
+
   const handleClick = () => {
     navigate(`/${index}`);
   };
@@ -24,7 +24,7 @@ const NoteItemList = (props: NoteItemListProps) => {
         <NoteItemTitle>{title}</NoteItemTitle>
         <NoteItemDescription>18시간 전 수정했어요</NoteItemDescription>
       </InfoSection>
-      <BookMark onClick={() => handleBookMark(index)}>
+      <BookMark onClick={(event) => handleBookMark(index, event)}>
         {bookMark ? <BookMarkFillIcon /> : <BookMarkBlankIcon />}
       </BookMark>
     </NoteItemWrapper>
@@ -45,7 +45,10 @@ const NoteItemWrapper = styled.section`
   border-radius: 10px;
 `;
 
-const InfoSection = styled.div``;
+const InfoSection = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const NoteItemTitle = styled.h3`
   ${({ theme }) => theme.fonts.heading04};
@@ -59,4 +62,6 @@ const NoteItemDescription = styled.p`
   color: ${({ theme }) => theme.colors.lightgray};
 `;
 
-const BookMark = styled.button``;
+const BookMark = styled.button`
+  z-index: 100;
+`;

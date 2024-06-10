@@ -12,28 +12,28 @@ const NoteList = () => {
   const clickHandler = (link: string) => {
     navigate(`/${link}`);
   };
-  const [data, setData] = useState();
-  const handleBookMark = (index: number) => {
-    const dataList = JSON.parse(localStorage.getItem('dataList'));
-    dataList[index].bookMark = !dataList[index].bookMark;
-    localStorage.setItem('dataList', JSON.stringify(dataList));
-    console.log(JSON.parse(localStorage.getItem('dataList')));
+
+  const initialData = JSON.parse(localStorage.getItem('dataList')!);
+  const [memoList, setMemoList] = useState(initialData);
+
+  const handleBookMark = (index: number, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation();
+    const tempList = [...memoList];
+    tempList[index].bookMark = !tempList[index].bookMark;
+    setMemoList(tempList);
+    localStorage.setItem('dataList', JSON.stringify(memoList));
+    console.log(JSON.parse(localStorage.getItem('dataList')!));
   };
 
-  const dataList = JSON.parse(localStorage.getItem('dataList'));
-  const noteList = dataList
-    ? dataList.map((data: NoteItemListProps, index: number) => (
-        // eslint-disable-next-line indent
-        <NoteItemList
-          key={index}
-          index={index}
-          title={data.title}
-          text={data.text}
-          bookMark={data.bookMark}
-          handleBookMark={handleBookMark}
-        />
-      ))
-    : null;
+  const noteList = memoList.map((data: NoteItemListProps, index: number) => (
+    <NoteItemList
+      key={index}
+      index={index}
+      title={data.title}
+      bookMark={data.bookMark}
+      handleBookMark={handleBookMark}
+    />
+  ));
 
   return (
     <>
