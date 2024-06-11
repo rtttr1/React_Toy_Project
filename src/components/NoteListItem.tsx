@@ -1,7 +1,7 @@
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { BookMarkBlankIcon, BookMarkFillIcon } from '../assets';
+import usePageNavigate from '../hooks/usePageNavigate';
 
 export interface NoteItemListProps {
   title: string;
@@ -12,18 +12,15 @@ export interface NoteItemListProps {
 }
 
 const NoteListItem = (props: NoteItemListProps) => {
-  const navigate = useNavigate();
   const { title, index, bookMark, handleBookMark, fixTime } = props;
   const fixedTime = new Date(fixTime);
   console.log(fixedTime.getHours());
 
   const today = new Date();
-  const handleClick = () => {
-    navigate(`/${index}`);
-  };
 
+  const { goEditNotePage } = usePageNavigate();
   return (
-    <NoteItemWrapper onClick={handleClick}>
+    <NoteItemWrapper onClick={() => goEditNotePage(index)}>
       <InfoSection>
         <NoteItemTitle>{title}</NoteItemTitle>
         <NoteItemDescription>{today.getHours() - fixedTime.getHours()}시간 전 수정했어요</NoteItemDescription>

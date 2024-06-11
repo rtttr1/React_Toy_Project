@@ -35,10 +35,6 @@ const GlobalStyle = styled.createGlobalStyle`
     display: flex;
     justify-content: center;
     width: 100%;
-
-    /* stylelint-disable-next-line unit-allowed-list */
-    transition-duration: 1s;
-    transition-property: background-color, color;
   }
 
   a {

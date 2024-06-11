@@ -1,19 +1,15 @@
 /* eslint-disable indent */
 import { SetStateAction, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Button from '../components/Button';
 import DropDown from '../components/DropDown';
 import NoteListItem, { NoteItemListProps } from '../components/NoteListItem';
+import usePageNavigate from '../hooks/usePageNavigate';
 import { memoDataType } from '../types';
 
 const NoteList = () => {
-  const navigate = useNavigate();
-  const clickHandler = (link: string) => {
-    navigate(`/${link}`);
-  };
-
+  const { goCreateNotePage } = usePageNavigate();
   const [dropDownText, setDropDownText] = useState('최근 생성순');
 
   const handleDropDownClick = (event: { target: { value: SetStateAction<string> } }) => {
@@ -66,7 +62,7 @@ const NoteList = () => {
       </FilterSection>
       <NoteSection>{noteList}</NoteSection>
 
-      <NewNoteBtn color="blue" onClick={() => clickHandler('NewNote')}>
+      <NewNoteBtn color="blue" onClick={goCreateNotePage}>
         새 노트
       </NewNoteBtn>
     </>

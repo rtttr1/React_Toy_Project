@@ -1,16 +1,13 @@
 import { FormEvent, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Button from '../components/Button';
+import usePageNavigate from '../hooks/usePageNavigate';
 import { memoDataType } from '../types';
 
 const EditNotePage = () => {
-  const navigate = useNavigate();
-  const clickHandler = () => {
-    navigate(`/`);
-  };
-
+  const { goMainPage } = usePageNavigate();
   const { id } = useParams();
 
   let dataList = JSON.parse(localStorage.getItem('dataList')!);
@@ -23,11 +20,9 @@ const EditNotePage = () => {
 
   const handleDeleteNote = () => {
     dataList.splice(id, 1);
-
     localStorage.setItem('dataList', JSON.stringify(dataList));
-
     alert('메모 삭제 성공');
-    navigate('/');
+    goMainPage();
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -40,12 +35,12 @@ const EditNotePage = () => {
       console.log(localStorage.getItem('dataList')!);
     }
 
-    navigate('/');
+    goMainPage();
   };
 
   return (
     <>
-      <BackBtn color={'yellow'} onClick={clickHandler}>
+      <BackBtn color={'yellow'} onClick={goMainPage}>
         뒤로가기
       </BackBtn>
       <NoteForm onSubmit={(event) => handleSubmit(event)}>

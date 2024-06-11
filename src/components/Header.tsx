@@ -8,7 +8,7 @@ import Button from './Button';
 
 const Header = () => {
   const setCurrentMode = useSetRecoilState(currentModeState);
-
+  // 라이트모드 다크모드 변환
   const handleThemeChange = () => {
     setCurrentMode((prevState) => (prevState === 'LIGHT' ? 'DARK' : 'LIGHT'));
   };
@@ -57,7 +57,9 @@ const ColorBtn = styled.button<{ color: string }>`
   border-radius: 5px;
 `;
 
-const ThemeBtn = styled(Button)``;
+const ThemeBtn = styled(Button)`
+  cursor: pointer;
+`;
 
 const HeaderTitle = styled.h1`
   ${({ theme }) => theme.fonts.heading00};

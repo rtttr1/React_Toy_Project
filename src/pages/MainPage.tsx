@@ -7,9 +7,7 @@ const MainPage = () => {
   return (
     <MainPageWrapper>
       <Header />
-      <ContentSection>
-        <Outlet />
-      </ContentSection>
+      <Outlet />
     </MainPageWrapper>
   );
 };
@@ -30,7 +28,6 @@ const MainPageWrapper = styled.div`
   transform: translate(-50%, -50%);
   border-radius: 30px;
 
+  /* stylelint-disable-next-line unit-allowed-list */
   transition-duration: 0.2s;
 `;
-
-const ContentSection = styled.section``;
