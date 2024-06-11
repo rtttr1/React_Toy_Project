@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 import { BtnColor } from '../constants';
 import { currentModeState } from '../recoil/modeAtom';
+// eslint-disable-next-line import/order
+import Button from './Button';
 
 const Header = () => {
   const setCurrentMode = useSetRecoilState(currentModeState);
@@ -19,7 +21,7 @@ const Header = () => {
             return <ColorBtn key={index} color={color}></ColorBtn>;
           })}
         </ColorBtnList>
-        <ThemeBtn type="button" onClick={handleThemeChange}>
+        <ThemeBtn type="button" onClick={handleThemeChange} color="blue">
           모드
         </ThemeBtn>
       </HeaderButtonWrapper>
@@ -55,7 +57,7 @@ const ColorBtn = styled.button<{ color: string }>`
   border-radius: 5px;
 `;
 
-const ThemeBtn = styled.button``;
+const ThemeBtn = styled(Button)``;
 
 const HeaderTitle = styled.h1`
   ${({ theme }) => theme.fonts.heading00};

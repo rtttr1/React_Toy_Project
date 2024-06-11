@@ -1,11 +1,12 @@
 /* eslint-disable indent */
-import { useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Button from '../components/Button';
 import DropDown from '../components/DropDown';
-import NoteItemList, { NoteItemListProps } from '../components/NoteListItem';
+import NoteListItem, { NoteItemListProps } from '../components/NoteListItem';
+import { memoDataType } from '../types';
 
 const NoteList = () => {
   const navigate = useNavigate();
@@ -13,8 +14,29 @@ const NoteList = () => {
     navigate(`/${link}`);
   };
 
+  const [dropDownText, setDropDownText] = useState('최근 생성순');
+
+  const handleDropDownClick = (event: { target: { value: SetStateAction<string> } }) => {
+    setDropDownText(event.target.value);
+  };
+
   const initialData = JSON.parse(localStorage.getItem('dataList')!);
   const [memoList, setMemoList] = useState(initialData);
+
+  useEffect(() => {
+    switch (dropDownText) {
+      case '북마크':
+        setMemoList(memoList.filter((memo: memoDataType) => memo.bookMark));
+        break;
+      case '최근 생성순':
+        setMemoList(initialData.reverse());
+        break;
+      case '최근 수정순':
+        setMemoList(initialData.sort());
+        console.log(memoList);
+        break;
+    }
+  }, [dropDownText]);
 
   const handleBookMark = (index: number, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation();
@@ -26,12 +48,13 @@ const NoteList = () => {
   };
 
   const noteList = memoList.map((data: NoteItemListProps, index: number) => (
-    <NoteItemList
+    <NoteListItem
       key={index}
       index={index}
       title={data.title}
       bookMark={data.bookMark}
       handleBookMark={handleBookMark}
+      fixTime={data.fixTime}
     />
   ));
 
@@ -39,7 +62,7 @@ const NoteList = () => {
     <>
       <FilterSection>
         <InputBar placeholder="검색"></InputBar>
-        <DropDown>최근 생성순</DropDown>
+        <DropDown dropDownText={dropDownText} handleDropDownClick={handleDropDownClick} />
       </FilterSection>
       <NoteSection>{noteList}</NoteSection>
 

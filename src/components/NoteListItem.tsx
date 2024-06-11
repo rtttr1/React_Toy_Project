@@ -6,14 +6,18 @@ import { BookMarkBlankIcon, BookMarkFillIcon } from '../assets';
 export interface NoteItemListProps {
   title: string;
   index: number;
+  handleBookMark: (index: number, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   bookMark: boolean;
-  handleBookMark: any;
+  fixTime: Date;
 }
 
-const NoteItemList = (props: NoteItemListProps) => {
+const NoteListItem = (props: NoteItemListProps) => {
   const navigate = useNavigate();
-  const { title, index, bookMark, handleBookMark } = props;
+  const { title, index, bookMark, handleBookMark, fixTime } = props;
+  const fixedTime = new Date(fixTime);
+  console.log(fixedTime.getHours());
 
+  const today = new Date();
   const handleClick = () => {
     navigate(`/${index}`);
   };
@@ -22,7 +26,7 @@ const NoteItemList = (props: NoteItemListProps) => {
     <NoteItemWrapper onClick={handleClick}>
       <InfoSection>
         <NoteItemTitle>{title}</NoteItemTitle>
-        <NoteItemDescription>18시간 전 수정했어요</NoteItemDescription>
+        <NoteItemDescription>{today.getHours() - fixedTime.getHours()}시간 전 수정했어요</NoteItemDescription>
       </InfoSection>
       <BookMark onClick={(event) => handleBookMark(index, event)}>
         {bookMark ? <BookMarkFillIcon /> : <BookMarkBlankIcon />}
@@ -31,7 +35,7 @@ const NoteItemList = (props: NoteItemListProps) => {
   );
 };
 
-export default NoteItemList;
+export default NoteListItem;
 
 const NoteItemWrapper = styled.section`
   display: flex;

@@ -6,6 +6,11 @@ import Button from '../components/Button';
 import { memoDataType } from '../types';
 
 const EditNotePage = () => {
+  const navigate = useNavigate();
+  const clickHandler = () => {
+    navigate(`/`);
+  };
+
   const { id } = useParams();
 
   let dataList = JSON.parse(localStorage.getItem('dataList')!);
@@ -14,10 +19,6 @@ const EditNotePage = () => {
 
   const handleInputValue = (value: string, identifier: string) => {
     setData((prevState) => ({ ...prevState, [identifier]: value }));
-  };
-  const navigate = useNavigate();
-  const clickHandler = () => {
-    navigate(`/`);
   };
 
   const handleDeleteNote = () => {
@@ -32,8 +33,11 @@ const EditNotePage = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!(dataList.title === data.title && dataList.text === data.text)) {
+      setData((prevState) => ({ ...prevState, fixTime: new Date() }));
       dataList = JSON.stringify(dataList.with(id, data));
       window.localStorage.setItem('dataList', dataList);
+      alert('수정했습니다');
+      console.log(localStorage.getItem('dataList')!);
     }
 
     navigate('/');

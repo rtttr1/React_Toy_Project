@@ -3,29 +3,49 @@ import type { MenuProps } from 'antd';
 import { Button, Dropdown } from 'antd';
 import styled from 'styled-components';
 
-const items: MenuProps['items'] = [
-  {
-    key: '1',
-    label: <button>최근 생성순</button>,
-  },
-  {
-    key: '2',
-    label: <button>최근 수정순</button>,
-  },
-  {
-    key: '3',
-    label: <button>북마크</button>,
-  },
-];
+interface DropDownprops {
+  dropDownText: string;
+  handleDropDownClick: string;
+}
 
-const DropDown = () => (
-  <DropDownBtn menu={{ items }} placement="bottom" arrow={{ pointAtCenter: true }}>
-    <Button>
-      최근 생성순
-      <DownOutlined />
-    </Button>
-  </DropDownBtn>
-);
+const DropDown = (props: DropDownprops) => {
+  const { dropDownText, handleDropDownClick } = props;
+
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      label: (
+        <button onClick={handleDropDownClick} value={'최근 생성순'}>
+          최근 생성순
+        </button>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+        <button onClick={handleDropDownClick} value={'최근 수정순'}>
+          최근 수정순
+        </button>
+      ),
+    },
+    {
+      key: '3',
+      label: (
+        <button onClick={handleDropDownClick} value={'북마크'}>
+          북마크
+        </button>
+      ),
+    },
+  ];
+  return (
+    <DropDownBtn menu={{ items }} placement="bottom" arrow={{ pointAtCenter: true }}>
+      <Button>
+        {dropDownText}
+        <DownOutlined />
+      </Button>
+    </DropDownBtn>
+  );
+};
 
 export default DropDown;
 

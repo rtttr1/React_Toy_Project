@@ -3,29 +3,32 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Button from '../components/Button';
+import { memoDataType } from '../types';
 
 const CreateNotePage = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState({ title: '', text: '', bookMark: false });
-  const handleInputValue = (value: string, identifier: string) => {
-    setData((prevState) => ({ ...prevState, [identifier]: value }));
-  };
-
   const clickHandler = () => {
     navigate(`/`);
+  };
+
+  const [data, setData] = useState<memoDataType>({
+    title: '',
+    text: '',
+    bookMark: false,
+    createTime: new Date(),
+    fixTime: new Date(),
+  });
+
+  const handleInputValue = (value: string, identifier: string) => {
+    setData((prevState) => ({ ...prevState, [identifier]: value }));
   };
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    if (localStorage.getItem('dataList')) {
-      const dataList = JSON.stringify([...JSON.parse(localStorage.getItem('dataList')!), data]);
-
-      localStorage.setItem('dataList', dataList);
-    } else {
-      const dataList = JSON.stringify([data]);
-      localStorage.setItem('dataList', dataList);
-    }
+    const dataList = JSON.stringify([...JSON.parse(localStorage.getItem('dataList')!), data]);
+    localStorage.setItem('dataList', dataList);
+    console.log(localStorage.getItem('dataList')!);
     alert('메모 생성 성공');
     navigate('/');
   };
