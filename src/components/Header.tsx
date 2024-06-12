@@ -1,8 +1,18 @@
+import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import { BtnColor } from '../constants';
+import { currentModeState } from '../recoil/modeAtom';
+// eslint-disable-next-line import/order
+import Button from './Button';
 
 const Header = () => {
+  const setCurrentMode = useSetRecoilState(currentModeState);
+
+  const handleThemeChange = () => {
+    setCurrentMode((prevState) => (prevState === 'LIGHT' ? 'DARK' : 'LIGHT'));
+  };
+
   return (
     <HeaderWrapper>
       <HeaderButtonWrapper>
@@ -11,7 +21,9 @@ const Header = () => {
             return <ColorBtn key={index} color={color}></ColorBtn>;
           })}
         </ColorBtnList>
-        <ThemeBtn type="button">모드</ThemeBtn>
+        <ThemeBtn type="button" onClick={handleThemeChange} color="blue">
+          모드
+        </ThemeBtn>
       </HeaderButtonWrapper>
       <HeaderTitle>홍 노트</HeaderTitle>
       <HeaderDescription>리액트 스터디 모각공 언제 열어주세요?</HeaderDescription>
@@ -45,7 +57,7 @@ const ColorBtn = styled.button<{ color: string }>`
   border-radius: 5px;
 `;
 
-const ThemeBtn = styled.button``;
+const ThemeBtn = styled(Button)``;
 
 const HeaderTitle = styled.h1`
   ${({ theme }) => theme.fonts.heading00};

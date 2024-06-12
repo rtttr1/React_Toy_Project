@@ -1,22 +1,41 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { BookMarkIcon } from '../assets';
+import { BookMarkBlankIcon, BookMarkFillIcon } from '../assets';
 
-const NoteItemList = () => {
+export interface NoteItemListProps {
+  title: string;
+  index: number;
+  handleBookMark: (index: number, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  bookMark: boolean;
+  fixTime: Date;
+}
+
+const NoteListItem = (props: NoteItemListProps) => {
+  const navigate = useNavigate();
+  const { title, index, bookMark, handleBookMark, fixTime } = props;
+  const fixedTime = new Date(fixTime);
+  console.log(fixedTime.getHours());
+
+  const today = new Date();
+  const handleClick = () => {
+    navigate(`/${index}`);
+  };
+
   return (
-    <NoteItemWrapper>
+    <NoteItemWrapper onClick={handleClick}>
       <InfoSection>
-        <NoteItemTitle>리액트 토이 프로젝트</NoteItemTitle>
-        <NoteItemDescription>18시간 전 수정했어요</NoteItemDescription>
+        <NoteItemTitle>{title}</NoteItemTitle>
+        <NoteItemDescription>{today.getHours() - fixedTime.getHours()}시간 전 수정했어요</NoteItemDescription>
       </InfoSection>
-      <BookMark>
-        <BookMarkIcon />
+      <BookMark onClick={(event) => handleBookMark(index, event)}>
+        {bookMark ? <BookMarkFillIcon /> : <BookMarkBlankIcon />}
       </BookMark>
     </NoteItemWrapper>
   );
 };
 
-export default NoteItemList;
+export default NoteListItem;
 
 const NoteItemWrapper = styled.section`
   display: flex;
@@ -24,11 +43,16 @@ const NoteItemWrapper = styled.section`
   width: 100%;
   padding: 1.7rem;
 
-  background-color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.text_color};
+
+  background-color: ${({ theme }) => theme.content_color};
   border-radius: 10px;
 `;
 
-const InfoSection = styled.div``;
+const InfoSection = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const NoteItemTitle = styled.h3`
   ${({ theme }) => theme.fonts.heading04};
@@ -42,4 +66,6 @@ const NoteItemDescription = styled.p`
   color: ${({ theme }) => theme.colors.lightgray};
 `;
 
-const BookMark = styled.button``;
+const BookMark = styled.button`
+  z-index: 100;
+`;

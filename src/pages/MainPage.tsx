@@ -24,9 +24,13 @@ const MainPageWrapper = styled.div`
   height: 60rem;
   padding: 3rem;
 
-  background-color: ${({ theme }) => theme.colors.gray};
+  color: ${({ theme }) => theme.text_color};
+
+  background-color: ${({ theme }) => theme.background_color};
   transform: translate(-50%, -50%);
   border-radius: 30px;
+
+  transition-duration: 0.2s;
 `;
 
 const ContentSection = styled.section``;
