@@ -32,9 +32,7 @@ const EditNotePage = () => {
       dataList = JSON.stringify(dataList.with(id, data));
       window.localStorage.setItem('dataList', dataList);
       alert('수정했습니다');
-      console.log(localStorage.getItem('dataList')!);
     }
-
     goMainPage();
   };
 
@@ -94,11 +92,11 @@ const TextInput = styled.input`
 const CheckBtn = styled(Button)`
   position: absolute;
   right: 3rem;
-  bottom: 5rem;
+  bottom: 4rem;
 `;
 const DeleteBtn = styled(Button)`
   position: absolute;
   right: 9rem;
-  bottom: 5rem;
+  bottom: 4rem;
 `;
 export default EditNotePage;

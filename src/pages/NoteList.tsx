@@ -1,46 +1,27 @@
 /* eslint-disable indent */
-import { SetStateAction, useEffect, useState } from 'react';
+import { ChangeEvent } from 'react';
 import styled from 'styled-components';
 
 import Button from '../components/Button';
 import DropDown from '../components/DropDown';
 import NoteListItem, { NoteItemListProps } from '../components/NoteListItem';
+import useDropdown from '../hooks/useDropdown';
 import usePageNavigate from '../hooks/usePageNavigate';
-import { memoDataType } from '../types';
 
 const NoteList = () => {
   const { goCreateNotePage } = usePageNavigate();
-  const [dropDownText, setDropDownText] = useState('최근 생성순');
+  const { memoList, setMemoList, dropDownText, setDropDownText } = useDropdown();
 
-  const handleDropDownClick = (event: { target: { value: SetStateAction<string> } }) => {
+  const handleDropDownClick = (event: ChangeEvent<HTMLSelectElement>) => {
     setDropDownText(event.target.value);
   };
 
-  const initialData = JSON.parse(localStorage.getItem('dataList')!);
-  const [memoList, setMemoList] = useState(initialData);
-
-  useEffect(() => {
-    switch (dropDownText) {
-      case '북마크':
-        setMemoList(memoList.filter((memo: memoDataType) => memo.bookMark));
-        break;
-      case '최근 생성순':
-        setMemoList(initialData.reverse());
-        break;
-      case '최근 수정순':
-        setMemoList(initialData.sort());
-        console.log(memoList);
-        break;
-    }
-  }, [dropDownText]);
-
-  const handleBookMark = (index: number, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleBookMark = (index: number, event: { stopPropagation: () => void }) => {
     event.stopPropagation();
     const tempList = [...memoList];
     tempList[index].bookMark = !tempList[index].bookMark;
     setMemoList(tempList);
     localStorage.setItem('dataList', JSON.stringify(memoList));
-    console.log(JSON.parse(localStorage.getItem('dataList')!));
   };
 
   const noteList = memoList.map((data: NoteItemListProps, index: number) => (
@@ -61,7 +42,6 @@ const NoteList = () => {
         <DropDown dropDownText={dropDownText} handleDropDownClick={handleDropDownClick} />
       </FilterSection>
       <NoteSection>{noteList}</NoteSection>
-
       <NewNoteBtn color="blue" onClick={goCreateNotePage}>
         새 노트
       </NewNoteBtn>
@@ -89,7 +69,7 @@ const InputBar = styled.input`
 const NewNoteBtn = styled(Button)`
   position: absolute;
   right: 3rem;
-  bottom: 5rem;
+  bottom: 4rem;
 `;
 
 const NoteSection = styled.section`

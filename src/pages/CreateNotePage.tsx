@@ -1,15 +1,12 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Button from '../components/Button';
+import usePageNavigate from '../hooks/usePageNavigate';
 import { memoDataType } from '../types';
 
 const CreateNotePage = () => {
-  const navigate = useNavigate();
-  const clickHandler = () => {
-    navigate(`/`);
-  };
+  const { goMainPage } = usePageNavigate();
 
   const [data, setData] = useState<memoDataType>({
     title: '',
@@ -28,14 +25,13 @@ const CreateNotePage = () => {
 
     const dataList = JSON.stringify([...JSON.parse(localStorage.getItem('dataList')!), data]);
     localStorage.setItem('dataList', dataList);
-    console.log(localStorage.getItem('dataList')!);
     alert('메모 생성 성공');
-    navigate('/');
+    goMainPage();
   };
 
   return (
     <>
-      <BackBtn color={'yellow'} onClick={clickHandler}>
+      <BackBtn color={'yellow'} onClick={goMainPage}>
         뒤로가기
       </BackBtn>
       <NoteForm onSubmit={handleSubmit}>
@@ -88,5 +84,5 @@ const TextInput = styled.input`
 const CheckBtn = styled(Button)`
   position: absolute;
   right: 3rem;
-  bottom: 5rem;
+  bottom: 4rem;
 `;

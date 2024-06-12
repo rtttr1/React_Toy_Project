@@ -5,7 +5,8 @@ import styled from 'styled-components';
 
 interface DropDownprops {
   dropDownText: string;
-  handleDropDownClick: string;
+  // eslint-disable-next-line no-unused-vars
+  handleDropDownClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const DropDown = (props: DropDownprops) => {
